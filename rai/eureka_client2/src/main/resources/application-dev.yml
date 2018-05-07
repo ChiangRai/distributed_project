@@ -1,0 +1,17 @@
+eureka:
+  client:
+    service-url:
+     defaultZone: http://127.0.0.1:8761/eureka/,http://127.0.0.1:8762/eureka/,http://127.0.0.1:8763/eureka/
+#  instance:
+#    hostname: MyclientName2
+
+spring:
+  application:
+    name: client2
+server:
+  port: 8088
+
+#ribbon 服务内部之间的负载均衡      服务名.ribbon.NFLoadBalancerRuleClassName.负载均衡的模式
+CLIENT:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
