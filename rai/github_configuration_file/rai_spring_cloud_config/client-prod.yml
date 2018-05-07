@@ -1,0 +1,13 @@
+eureka:
+  client:
+    service-url:
+         defaultZone: http://127.0.0.1:8761/eureka/,http://127.0.0.1:8762/eureka/,http://127.0.0.1:8763/eureka/
+ # instance:
+ #   hostname: rai_eureka_client
+
+server:
+  port: 8888
+
+spring:
+  application:
+    name: rai_eureka_client
