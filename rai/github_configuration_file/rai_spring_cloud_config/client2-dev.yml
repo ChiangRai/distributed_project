@@ -7,4 +7,4 @@ CLIENT:
     
 server:
   port: 8088
-env: print1
+env: print12
