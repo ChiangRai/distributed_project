@@ -16,4 +16,4 @@ spring:
     password: guest
 girl:
   name: xiaoping
-  age: 12213
+  age: 1
