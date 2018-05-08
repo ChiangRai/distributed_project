@@ -14,7 +14,7 @@ spring:
     
 server:
   port: 8088
-env: 第五人格
+env: 第五人格123
 
 girl:
   name: xiaoping12334x89tt  
