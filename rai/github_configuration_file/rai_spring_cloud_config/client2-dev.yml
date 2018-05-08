@@ -7,7 +7,7 @@ CLIENT:
     
 server:
   port: 8088
-env: print
+env: 完美
 spring:
   rabbitmq:
     host: 192.168.99.100
