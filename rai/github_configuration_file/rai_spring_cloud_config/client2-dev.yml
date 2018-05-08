@@ -14,4 +14,4 @@ CLIENT:
     
 server:
   port: 8088
-env: print
+env: print1
