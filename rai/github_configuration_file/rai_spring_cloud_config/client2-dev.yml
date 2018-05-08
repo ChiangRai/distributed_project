@@ -15,5 +15,5 @@ spring:
     username: guest
     password: guest
 girl:
-  name: xiaoping
+  name: xiaoping123
   age: 111
