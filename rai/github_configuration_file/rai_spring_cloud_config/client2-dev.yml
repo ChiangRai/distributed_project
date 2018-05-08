@@ -7,7 +7,7 @@ CLIENT:
     
 server:
   port: 8088
-env: printprintprint12
+env: print
 spring:
   rabbitmq:
     host: 192.168.99.100
