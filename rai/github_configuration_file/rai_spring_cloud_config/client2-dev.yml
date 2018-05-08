@@ -14,7 +14,7 @@ spring:
     
 server:
   port: 8088
-env: 完美1
+env: 完美123
 
 girl:
   name: xiaoping12334x89tt  
