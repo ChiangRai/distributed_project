@@ -8,12 +8,7 @@ CLIENT:
 server:
   port: 8088
 env: 完美TYQ
-spring:
-  rabbitmq:
-    host: 192.168.99.100
-    port: 5672
-    username: guest
-    password: guest
+
 girl:
   name: xiaoping12334x89tt  
   age: 111
