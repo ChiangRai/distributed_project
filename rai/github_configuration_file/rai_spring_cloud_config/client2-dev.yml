@@ -1,6 +1,6 @@
 
 
-#ribbon 服务内部之间的负载均衡      服务名.ribbon.NFLoadBalancerRuleClassName.负载均衡的模式
+#ribbon 服务内部之间的负载均衡 _      服务名.ribbon.NFLoadBalancerRuleClassName.负载均衡的模式
 CLIENT:
   ribbon:
     NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
