@@ -19,8 +19,7 @@ management:
       exposure:
         include: "*"
         
-server:
-  port: 8088
+
 
 
 env: 穷查理.芒格21
