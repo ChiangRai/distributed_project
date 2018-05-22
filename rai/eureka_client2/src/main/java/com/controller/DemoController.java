@@ -1,9 +1,12 @@
 package com.controller;
 
+import com.busConfig.GirlConfig;
 import com.feignclient.ClientFeign;
-import lombok.extern.slf4j.Slf4j;
+import com.rabbitmq.StreamRabbitmqClient2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -16,7 +19,6 @@ import org.springframework.web.client.RestTemplate;
  * @Time: 13:41
  */
 @RestController
-@Slf4j
 public class DemoController {
 
 
@@ -25,6 +27,8 @@ public class DemoController {
     public  String eureka_client(){
         return "eureka_client2";
     }
+
+
 
 
     //第二种
@@ -61,17 +65,50 @@ public class DemoController {
 
 
 
-
+    //feign 的用法
     @Autowired
     private ClientFeign clientFeign;
 
-    //feign 的用法
+
     @GetMapping("/feign")
     public String feign(){
         String msg = clientFeign.msg();
         return  msg;
     }
+    //feign 的用法 结束
+
+    @Value("${env}")
+    public String env;
 
 
+
+
+    // bus用法
+    @Autowired
+    public GirlConfig girlConfig;
+
+    @GetMapping("/print")
+    public String env(){
+        String jsonString = "";
+        return "消息是："+girlConfig.getName()+" 年纪："+girlConfig.getAge()+"  ||"+env;
+        /*+" |name:"+girlConfig.getName()+"  |age:"+girlConfig.getAge();*/
+    }
+
+
+
+
+
+    @Autowired
+    com.rabbitmq.StreamRabbitmqClient2 StreamRabbitmqClient2;
+
+
+    @GetMapping("/sendMessage")
+    public void  send3(){
+        StreamRabbitmqClient2.ouput().send(
+                MessageBuilder.withPayload(
+                        "streamRabbitmqClient klsdjf"
+                ).build()
+        );
+    }
 
 }

@@ -1,0 +1,29 @@
+spring:
+  rabbitmq:
+    host: 192.168.99.100
+    port: 5672
+    username: test
+    password: test
+
+  application:
+    name: client2
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: CONFIG
+      profile: dev
+    stream:
+      bindings:  #消息分组
+        INPUTOINPUTO: #消息的名称 队列名称
+          group: myINPUTOINPUTO
+
+eureka:
+  client:
+    service-url:
+     defaultZone: http://127.0.0.1:8761/eureka/,http://127.0.0.1:8762/eureka/,http://127.0.0.1:8763/eureka/
+#  instance:
+#    hostname: MyclientName2
+
+server:
+  port: 8088

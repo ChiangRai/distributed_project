@@ -1,0 +1,22 @@
+spring:
+  rabbitmq:
+    host: 192.168.99.100
+    port: 5672
+    username: test
+    password: test
+
+  application:
+    name: client
+
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: CONFIG
+      profile: dev
+
+
+eureka:
+  client:
+    service-url:
+     defaultZone: http://127.0.0.1:8761/eureka/,http://127.0.0.1:8762/eureka/,http://127.0.0.1:8763/eureka/

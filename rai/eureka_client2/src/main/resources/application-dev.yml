@@ -15,3 +15,5 @@ server:
 CLIENT:
   ribbon:
     NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+
+
