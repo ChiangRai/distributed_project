@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: api-zuul
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: CONFIG
+      profile: dev
+
+eureka:
+  client:
+    service-url:
+     defaultZone: http://127.0.0.1:8761/eureka/,http://127.0.0.1:8762/eureka/,http://127.0.0.1:8763/eureka/
+
+server:
+  port: 8083
+
+
+
+zuul:
+  routes:
+#    client1:
+#      path: /myc/**
+#      serviceId: client
+#
+#    client2:
+#      path: /myc2/**
+#      serviceId: client2
+#      sensitiveHeaders: #cokie 不失效
+#    简单写法
+    client: /mycc/**
+    client2: /mycc2/**
+#    禁止访问
+  ignored-patterns:
+  - /**/eureka_client_no/**
+

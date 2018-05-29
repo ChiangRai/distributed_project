@@ -77,7 +77,7 @@ public class DemoController {
     }
     //feign 的用法 结束
 
-    @Value("${env}")
+   /* @Value("${env}")*/
     public String env;
 
 

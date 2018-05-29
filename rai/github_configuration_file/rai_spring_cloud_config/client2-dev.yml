@@ -19,10 +19,12 @@ management:
       exposure:
         include: "*"
         
+server:
+  port: 8088
 
 
+env: 穷查理.芒格77123213213
 
-env: 穷查理.芒格21
 girl:
-  name: 小糊涂神
-  age: 1234
+  name: xiaoping12334x89tt  
+  age: 111
