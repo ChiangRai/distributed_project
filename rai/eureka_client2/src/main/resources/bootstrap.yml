@@ -17,13 +17,82 @@ spring:
       bindings:  #消息分组
         INPUTOINPUTO: #消息的名称 队列名称
           group: myINPUTOINPUTO
+#  zipkin:
+#    base-url: http://192.168.99.100:9411  # 2
+#
+#  sleuth:
+##    enabled: true
+#    sampler:
+#      probability: 1.0
+##    web:
+##      client:
+##        enabled: true # 3
+
+  sleuth:
+#    web:
+#     client:
+#       enabled: true
+    sampler:
+      probability: 1.0 # 将采样比例设置为 1.0，也就是全部都需要。默认是 0.1
+  zipkin:
+#    enabled: true
+    base-url: http://192.168.99.100:9411/ # 指定了 Zipkin 服务器的地址
+
+
+#  zipkin:
+#   base-url: http://192.168.99.100:9411
+#
+#  sleuth:
+#    sampler:
+#      probability: 1.0
+
+
+
 
 eureka:
   client:
     service-url:
      defaultZone: http://127.0.0.1:8761/eureka/,http://127.0.0.1:8762/eureka/,http://127.0.0.1:8763/eureka/
+  instance:
+    prefer-ip-address: #已ip地址为准
 #  instance:
 #    hostname: MyclientName2
 
 server:
   port: 8088
+
+
+# Hystrix 熔断机制 配置
+hystrix:
+  command:
+    default:  # 默认的配置
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 2000      # 超时时间
+    getHystrixDelayedConfigurationFile:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 7000      # 超时时间
+
+
+#Feign.hystrix //配置
+feign:
+  hystrix:
+    enabled: true
+
+
+# 防止请求Unable to connect to Command Metric Stream. 错误. 取掉application
+
+
+# sleuth 日志调整
+#logging:
+#  level:
+#    org.springframework.cloud.openfeign: debug
+#    com.controller: info
+#    com.feignclient: debug
+logging:
+  level:
+    root: INFO
+    org.springframework.cloud.sleuth: DEBUG

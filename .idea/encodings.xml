@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/rai" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rai/api-zuul" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rai/demo" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rai/eureka" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rai/eureka_client" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rai/eureka_client2" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rai/eureka_config" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rai/zipkin-server" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rai/zipkin_servicer" charset="UTF-8" />
+  </component>
+</project>

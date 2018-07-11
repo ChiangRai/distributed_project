@@ -2,7 +2,14 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/rai/api-zuul/api-zuul.iml" filepath="$PROJECT_DIR$/rai/api-zuul/api-zuul.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rai/demo/demo.iml" filepath="$PROJECT_DIR$/rai/demo/demo.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/distributed_project.iml" filepath="$PROJECT_DIR$/.idea/distributed_project.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rai/eureka/eureka.iml" filepath="$PROJECT_DIR$/rai/eureka/eureka.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rai/eureka_client/eureka_client.iml" filepath="$PROJECT_DIR$/rai/eureka_client/eureka_client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rai/eureka_client2/eureka_client2.iml" filepath="$PROJECT_DIR$/rai/eureka_client2/eureka_client2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rai/eureka_config/eureka_config.iml" filepath="$PROJECT_DIR$/rai/eureka_config/eureka_config.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rai/zipkin-server/zipkin-server.iml" filepath="$PROJECT_DIR$/rai/zipkin-server/zipkin-server.iml" />
     </modules>
   </component>
 </project>

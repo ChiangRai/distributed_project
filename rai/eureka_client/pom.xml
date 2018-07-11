@@ -64,6 +64,13 @@
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 
+		<!--  包含sleuth zipkin  sleuth可视化-->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-zipkin</artifactId>
+		</dependency>
+
+
 	</dependencies>
 
 	<dependencyManagement>

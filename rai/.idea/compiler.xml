@@ -13,6 +13,8 @@
         <module name="eureka_client" />
         <module name="eureka_client (1)" />
         <module name="eureka_client 2" />
+        <module name="eureka_client2" />
+        <module name="eureka_config" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -20,10 +22,12 @@
       <module name="demo" target="1.8" />
       <module name="demo (1) (com.example)" target="1.8" />
       <module name="euraka" target="1.8" />
-      <module name="eureka" target="1.5" />
+      <module name="eureka" target="1.8" />
       <module name="eureka_client" target="1.8" />
       <module name="eureka_client (1)" target="1.8" />
       <module name="eureka_client 2" target="1.8" />
+      <module name="eureka_client2" target="1.8" />
+      <module name="eureka_config" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

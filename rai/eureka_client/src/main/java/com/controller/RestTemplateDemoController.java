@@ -20,6 +20,6 @@ public class RestTemplateDemoController {
 
     @GetMapping("/msg")
     public String msg() {
-        return "this is product eureka_client' msg2";
+        return "this is product eureka_client' msg2 666666666";
     }
 }

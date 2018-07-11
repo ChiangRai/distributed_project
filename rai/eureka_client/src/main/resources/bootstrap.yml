@@ -14,7 +14,16 @@ spring:
         enabled: true
         service-id: CONFIG
       profile: dev
+  zipkin:
+    base-url: http://192.168.99.100:9411/  # 2
 
+  sleuth:
+    enabled: true
+    sampler:
+      probability: 1.0
+    web:
+      client:
+        enabled: true # 3
 
 server:
   port: 8087
@@ -23,3 +32,16 @@ eureka:
   client:
     service-url:
      defaultZone: http://127.0.0.1:8761/eureka/,http://127.0.0.1:8762/eureka/,http://127.0.0.1:8763/eureka/
+  instance:
+    prefer-ip-address: #已ip地址为准
+
+# sleuth 日志调整
+#logging:
+#  level:
+#    org.springframework.cloud.openfeign: debug
+#    com.controller: info
+#    com.feignclient: debug
+logging:
+  level:
+    root: INFO
+    org.springframework.cloud.sleuth: DEBUG

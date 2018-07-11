@@ -1,0 +1,266 @@
+-- 找出三个团队的人
+
+
+
+ -- 递归子节点 开始
+ CREATE TABLE recursion_temporary(danqianID varchar(255),danqian varchar(255),shang_ji varchar(255)); -- 创建递归表
+
+ -- 先清空表
+	DELETE FROM `recursion_temporary`;
+ INSERT recursion_temporary (SELECT CLIENT_USER_ID,(SELECT USERNAME FROM client_user WHERE ID =CLIENT_USER_ID) ,  DIRECT_RECOMMENDER_NAME as "上级"  FROM client_user_recommender);  -- 插入数据
+
+
+
+
+
+
+-- 递归上级
+drop FUNCTION `getChildList2`;
+
+CREATE FUNCTION `getChildList2`(rootId varchar(10000))
+RETURNS varchar(4294967295)
+BEGIN
+DECLARE sTemp VARCHAR(4294967295);
+DECLARE sTempChd VARCHAR(4294967295);
+
+SET sTemp = '$';
+SET sTempChd =cast(rootId as CHAR);
+
+WHILE sTempChd is not null DO
+SET sTemp = concat(sTemp,',',sTempChd);
+SELECT group_concat(shang_ji) INTO sTempChd FROM recursion_temporary where FIND_IN_SET(danqian,sTempChd)>0;
+END WHILE;
+RETURN sTemp;
+END
+
+
+-- 查询
+select * from recursion_temporary where FIND_IN_SET(danqian,getChildList2('lytcc168'));
+-- 递归上级 结束
+
+
+
+-- 字段字符过长的递归子节点 开始
+-- drop FUNCTION `getChildList3`
+
+CREATE FUNCTION `getChildList3`(rootId varchar(10000))
+RETURNS varchar(4294967295)
+BEGIN
+DECLARE sTemp VARCHAR(4294967295);
+DECLARE sTempChd VARCHAR(4294967295);
+
+SET sTemp = '$';
+SET sTempChd =cast(rootId as CHAR);
+
+WHILE sTempChd is not null DO
+SET sTemp = concat(sTemp,',',sTempChd);
+SELECT group_concat(danqian) INTO sTempChd FROM recursion_temporary where FIND_IN_SET(shang_ji,sTempChd)>0;
+END WHILE;
+RETURN sTemp;
+END;
+
+select * from recursion_temporary where FIND_IN_SET(danqian,getChildList3('yz00001'));
+select * from recursion_temporary where FIND_IN_SET(danqian,getChildList3('xjwc001'));
+select * from recursion_temporary where FIND_IN_SET(danqian,getChildList3('ly0001'));
+
+
+
+-- coin_static_profit 静态收益表
+-- client_user 用户表
+-- client_user_wallet 用户表
+-- coin_tcc_points_profit     TTC points 转入转出日志表
+-- combo 矿机级别    /100
+-- order_scheduling 矿机
+
+
+SELECT *FROM order_scheduling os WHERE os.CLIENT_USER_ID = (SELECT  ID FROM client_user where USERNAME="a00007");  -- 没出局
+SELECT *FROM order_scheduling os WHERE os.CLIENT_USER_ID = (SELECT  ID FROM client_user where USERNAME="a00003");  -- 出局
+
+-- 找出不在 三个团队下 并且没有出局的人记录
+
+
+
+
+/*有出局.不出局的记录 直接出局*/
+SELECT * FROM order_scheduling WHERE CLIENT_USER_ID IN(
+SELECT CLIENT_USER_ID FROM order_scheduling GROUP BY CLIENT_USER_ID HAVING COUNT(CLIENT_USER_ID) > 1
+);
+
+
+
+/*只有一个并且在排单中*/
+SELECT * FROM order_scheduling WHERE CLIENT_USER_ID IN(
+SELECT CLIENT_USER_ID FROM order_scheduling GROUP BY CLIENT_USER_ID HAVING COUNT(CLIENT_USER_ID) = 1
+) AND ORDER_SCHEDULING_STATE_ENUM=1 ;
+
+
+
+
+/*只有一个并且在排单中并且不在三个团队中的*/
+SELECT * FROM order_scheduling WHERE CLIENT_USER_ID IN(
+SELECT CLIENT_USER_ID FROM order_scheduling GROUP BY CLIENT_USER_ID HAVING COUNT(CLIENT_USER_ID) = 1
+) AND ORDER_SCHEDULING_STATE_ENUM=1 AND CLIENT_USER_ID NOT IN(
+"ddb12ac2da44489ea2e1069d995d3ab3",
+"44fe08f5e28e4f87a66ebaab5fb0fc79",
+"685e623529054f269c6757af72bc64bd",
+"9c752d8469e14ddb8017d397550c09ff",
+"5d0ac1aafe72485babc2a3e962ecb64c",
+"3b72b9bce4a043c3ba819bdd0b845d8a",
+"24402ad4e21a45a5849d9e1c19ada4b7",
+"e7ea8f10d4b14de29508c313851328a2",
+"8d8f407f730d45b2b9caba5453e6473e",
+"23bf4719037e4a06ba345d490dfc69a8",
+"2a70371e06644213a6f1d2f6b69299a3",
+"eab52e6be4fe4db79d20c89508bfe77d",
+"cf60807cce924554ba76908adb4ec3c2",
+"48fd5c2274f243ad8139baf02542367d",
+"cebec5a6fab74752b8bca4ee6e871e9c",
+"28dc192655014b2493edbb3c924a0946",
+"05a55031fe8148008d07f91e14ada89c",
+"61293933f04940868764b07b6477d695",
+"484b0781597c4d2eba362557dc234ede",
+"49c886d9076a4c42bd28e28502d393c0",
+"de6aeca927d5402d86adae86a1f0f186",
+"8c4b1af748cf467c870bb097d2c447e0",
+"d3f40b897fed46bbbf58c8875e6dac61",
+"c253d4e45d8b4520902fce344c31f8cd",
+"475f9f0b0d9a441fa070e7f5a9efc6d2",
+"541a69caab6c4a1db283f0c98fb4c7bc",
+"20e42214d9b545e1a608434b62253182",
+"15eaac33fdc3407a89d8bc883ad2dcbb",
+"7f58189d6cf64392b836e38ba4f9cf68",
+"7ec9f91004424e78ac78d79dced1e2da",
+"b3499da691524536a5f5185e5ec42339",
+"ccd27a60e34d4b72a5ca9b5a10c5db44",
+"04172e3b2e5b4715b14820c015407f3b",
+"a675d721996742b1b523668ea83a6d9a",
+"23c66900c69d4a26931cfd351c61b80d",
+"879719d3823a4c5daba744594525abf6",
+"6759e260126c455fba547d45e960784d",
+"61a6be6997934c7787b64263949eee12",
+"49c9dda0941f4b689d261dc71bb1894b",
+"f94627b1314148a99f14321d3f6a83f7",
+"100caa71262f48e6b44afd3e7a0bcea4",
+"ff1ca44021d34a759a038ccd15447227",
+"b0199b09825e483da7c2ca7456a54c63",
+"9b2ebf9d14fd4e9c9ef8a007d317f983",
+"74e4b1833d724059a5c3f30689d88023",
+"661e56ee8a7a4fb59f3762be3f14b2c5",
+"c9ab7c5d1dd247f2a8c07dcbcd2f5fbd",
+"700047a0a9ae4d84867411e8bfcf1644",
+"4d0bf30bd10f436f9d88e0370c7c1db3",
+"b2eea70ac85c4684bdfdc54c2a21e3c7",
+"85b1a5759886450b94ff3c2d69a3129f",
+"d493e5c28c464f56a412abbf1a902982",
+"d61e600ada5a429f989da4311a31929d",
+"d61763f08fa642ad94297dd008fa1604",
+"ea1597ae4c8c4216a91a8a0829843e42",
+"aa6b7c1687464fbda7b3d5d93e4ef97b",
+"03e27cc4ab974a1c907c2144c920bbc4",
+"9cb1103b5b3442ab925594a129e1d4ef",
+"37c90fa959494a208c6f4ea533374ad1",
+"70eac8bfd7dd41acbd6ae42418d10635",
+"8db4ff8dd56a419aad3d0c31f0c47fa6",
+"f66f091c90994aaab01264475df2e606",
+"c7254c009faf4124b2f18216583793fa",
+"7e5d444fd1eb46e49822b098489f0974",
+"6c0adfa17f0f4423994bf4d51dd794ef",
+"b00de69587c742d588349c557e484dc8",
+"713e763b015842e3958d369ef84576b2",
+"fe6c6eebc74b49e68fca0bde0a6d3d7d",
+"e901c25c7d9d48a1ad77ae6fc99a4d86",
+"e1a371377e6c4f8dbd1471a3f415ee8c",
+"fb9060cfdb744701884352b3f390950e",
+"2d716e3893be4f108b04d23cdefeb5e5",
+"4791ff9ab5ba4a65a033fbf2ca16dfb9",
+"d08878d21d8449ff981f9e36ca36f55e",
+"d9ba57d36d2842aeb566f85f3d1b2418",
+"f2c22e271672440b85e79025ae7a1a2a",
+"6e3da088662c4c1cab5d1d399c9a70b5",
+"88bfcbd2b0b94687b513d32adfcaf992",
+"f370215d839d418fb27103c4e09b805e",
+"0626868ba93d49f484fc954e5a641b2d",
+"b77e9a6fe97940499411be86ebb2e736",
+"38647aa4e44a404f9cc33ec4c80ef4a1",
+"e20fa40eab0441df865c723aa12cc44b",
+"9959b909acf44144924cc6ca7235ad29",
+"a49fdf36cdda4905956ad2e8e940ae15",
+"82a34346325944f69c283b8cc138c0bc",
+"e9199f6e7935410bb9dad7c1d9dc37ff",
+"afb01580b74c4566a99abf82293e7693",
+"cb4a6833dc7141bfb76a546402555303",
+"040cd88162c24255933111efacf21548",
+"b57cdce9a4284a80a2e87c4705605e9d",
+"6a6e4f7cd52840808ed7dfb561d931ef",
+"43628d024ea74ed3a6c4a6991c063401",
+"970b545ee5ae4667836936193df50610",
+"316bc50c91af49cc986ae8e8f64cbca9",
+"c1c9341e26a24aeeb30f9d8ae56b35bd",
+"ed323faae7f54450b66b3dec4b677527",
+"28d567e76d344d98a3902dcd6847e4e2",
+"e8e89001b9b440298cbd5e485b3b66aa",
+"7ca3294b40a84ce19d52eda10350f863",
+"c837240178bd4a38866b425caf92290b",
+"fa5d0b6be46e458386d0b0a13f10e8d8",
+"9edd2ea3ab0d43aa85b26dfefdec8c9e",
+"30c056b89042453c9dbe5d919fa841e4",
+"0d8e929bc7c1445a8a8af5263519cc39",
+"57f537540896482ea7fa1e43b2dfc01e",
+"aff658de217b47a692cf8ddd908352da",
+"07d6e5dfca144806a29c37571139b166",
+"898394dfbdbe4526ab1300fee4c4fd03",
+"74698b47afff423e9931e5853caf0214",
+"8f65170619c942fda294da4e5785a298",
+"130c51208a16442f903d56698ae8bc9c",
+"388bab692a9e4c84a925681db34bbd11",
+"931d0fbb1e4842958e223573a2322f05",
+"035e74791365414a8567aa1470639aeb",
+"a039f7a9733b4c84abf18e0d101dbb45",
+"3472261d49c14ff7a5fcd45ad2645f8c",
+"2b68e84098d54af68cd505787af96b68",
+"519fbb18ace4492cae4f4b4a0a048562",
+"59de0fc9284f45888d8afc1e047400eb",
+"284f931bb7f2492d8140af393e5dec3b",
+"6c67c5e9065049379f88edeeb94b7886",
+"ac1a34f03c1d487ab7eb0591233ac239",
+"acb6cceac73a46af917fb36fb4c6e317",
+"add0138ee1a44dcc8ff6fffa340bd5c2",
+"d5ccbb97b3084d07b215d2dd00fb41f8",
+"4e51dfb9e60a440eaadebe5ea19f0db4",
+"0d17435adc3b4f31bde91f7fd8b8e455",
+"1795302147db4e3bb6b0a300cf857392",
+"a36780c1bd2046b2b8b78bd1bff3b2f4",
+"5a9cbd9814264a3d80b35604964a0b27",
+"f47ee0565b674820bc5c051361fead20",
+"170a04c3c208431aa9f24cfa491c4863",
+"bdf02bf0f5ca497b9d71f2c7c7d7c8a7",
+"0b2e601fb04248bfa5d76d31e808422c",
+"934b74946f4b4d79a808139a0e300332",
+"18a153f40d654b0abf2077e45452f86e",
+"b86171e4506d45779866735463d283d7",
+"27c3706a0c504123881f7f6cc2366f46",
+"ffe8eb71929d4c7680c4c5e8d9df21be",
+"f8cd2eae5c014292b37b54a18b418eb1",
+"3ad5e463e20d420db6c25059f8e724c9",
+"ecf8687ed6de4ce38eaa433f93392ff8",
+"b370bd5cafca478ca29dd0512eb7870f",
+"3a6fcfd12d6e4f21a3d5184632a1ea0b",
+"46f1a3faeacc4f85ad70c432bf983b4b",
+"0722a26f117e4d84ac56b3ab40045e3a",
+"1d762acac9aa46c48acc6745302dcf1b",
+"c7165a4ab0e34f8eb1ca9e54f3ed7c54",
+"2c5123be1d064f9bb517dd0546890fc9",
+"79520f8028c94724b044bdef3a105e5f",
+"323e0062986a49eb97f369c01bbf5c38",
+"9a9adc63fd5644c4980163385db9ed21",
+"8c222dbb523645ebaa56503804b3a9a4",
+"4f1dccc8312a4cce8d17b6897c05440b",
+"70a397d5436f470c876a8f3dc8325f25",
+"66ad7f87bc2a43e18d5cfd91ed89421f",
+"5a920a4bdd444155b13ba7df084cd6cf",
+"8accc33668b24950a6d1a78109a55132"
+);
+
+
+
+
